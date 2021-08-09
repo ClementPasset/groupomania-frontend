@@ -1,0 +1,14 @@
+.input{
+    display: block;
+    max-width: 300px;
+    width: 90%;
+    margin: 1rem;
+    padding: 1rem;
+    outline: none;
+    border: 3px solid transparent;
+    border-radius: .5rem;
+
+    &:focus{
+        border: 3px solid $red;
+    }
+}

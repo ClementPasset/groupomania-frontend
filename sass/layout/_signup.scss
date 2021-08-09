@@ -1,0 +1,16 @@
+.signup{
+    background-color: $blue;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    width: 90%;
+    border: 1px solid $orange;
+    color: $red;
+    position: relative;
+    border-radius: .5rem;
+
+    &__title{
+        text-align: center;
+        font-size: 2rem;
+    }
+}
