@@ -1,8 +1,9 @@
 import Form from '../../components/Form';
-import { faUser, faIdBadge, faAt, faLock, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faIdBadge, faAt, faLock } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useState } from 'react';
 
 const inputs = [
     {
@@ -17,7 +18,7 @@ const inputs = [
     },
     {
         name: 'mail',
-        placeholder: 'Mail',
+        placeholder: 'Email',
         icon: faAt
     },
     {
@@ -36,12 +37,45 @@ const StyledLink = styled(Link)`
 `;
 
 const Signup = () => {
+
+    const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
+        mail: '',
+        password: ''
+    });
+
+    let history = useHistory();
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        fetch('http://localhost:3001/api/user/signup/', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(response => {
+                if (response.ok) {
+                    let url = "/signin/";
+                    history.push(url);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data)
+            })
+            .catch(err => console.log(err));
+    }
+
     return (
-        <div className="signup">
-            <h2 className="signup__title">Inscription</h2>
-            <Form inputs={inputs} buttonText="S'inscrire" />
+        <section className="section">
+            <h2 className="section__title">Inscription</h2>
+            <Form inputs={inputs} handleForm={handleForm} buttonText="S'inscrire" user={user} setUser={setUser} />
             <StyledLink to="/signin" >Déjà inscrit ? Connectez-vous</StyledLink>
-        </div>
+        </section>
     );
 };
 

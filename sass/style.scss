@@ -1,6 +1,9 @@
 @import './utils/variables';
+@import './utils/responsive';
+@import './utils/animations';
+@import './base/base';
 @import './components/input';
 @import './components/btn';
 @import './components/formGroup';
-@import './base/base';
-@import './layout/signup';
+@import './components/header';
+@import './layout/section';

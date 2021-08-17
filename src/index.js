@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ErrorRoute from './pages/ErrorRoute';
 import Home from './pages/Home';
 import Signin from './pages/Signin';
@@ -27,29 +27,22 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Header links={links} />
-      {links.map((lien, index) => {
-        return (
-          <React.Fragment key={`liens-${index}`}>
-            <Link to={lien.path}>{lien.label}</Link>
-            <br />
-            <br />
-          </React.Fragment>
-        );
-      })}
-      <Switch>
-        <Route exact path="/signup">
-          <Signup />
-        </Route>
-        <Route exact path="/signin">
-          <Signin />
-        </Route>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route>
-          <ErrorRoute />
-        </Route>
-      </Switch>
+      <main>
+        <Switch>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+          <Route exact path="/signin">
+            <Signin />
+          </Route>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route>
+            <ErrorRoute />
+          </Route>
+        </Switch>
+      </main>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

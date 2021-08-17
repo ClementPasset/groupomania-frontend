@@ -13,6 +13,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        
+        &--error{
+            background-color: #e4b2b2;
+        }
     }
 
     &__input{

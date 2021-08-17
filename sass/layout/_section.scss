@@ -1,4 +1,4 @@
-.signup{
+.section{
     background-color: $blue;
     padding: 1.5rem;
     margin: 2rem auto;
@@ -8,9 +8,19 @@
     color: $red;
     position: relative;
     border-radius: .5rem;
+    animation: fade-in .2s ease-out;
 
     &__title{
         text-align: center;
         font-size: 2rem;
+        margin: 1rem;
+    }
+
+    &__text{
+        margin: 1rem;
+        font-size: 1.5rem;
+        color: $lightblue;
+        text-align: center;
+        line-height: 2rem;
     }
 }

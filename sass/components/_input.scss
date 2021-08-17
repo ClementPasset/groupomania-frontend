@@ -11,4 +11,8 @@
     &:focus{
         border: 3px solid $red;
     }
+
+    &--error{
+        background-color: #e4b2b2;
+    }
 }

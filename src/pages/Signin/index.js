@@ -3,11 +3,12 @@ import Form from '../../components/Form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
+import { useState } from 'react';
 
 const inputs = [
     {
         name: 'mail',
-        placeholder: 'Mail',
+        placeholder: 'Email',
         icon: faAt
     },
     {
@@ -26,12 +27,32 @@ const StyledLink = styled(Link)`
 `;
 
 const Signup = () => {
+
+    const [user, setUser] = useState({
+        mail: '',
+        password: ''
+    });
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        fetch('http://localhost:3001/api/user/signin', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
+    }
+
     return (
-        <div className="signup">
-            <h2 className="signup__title">Connexion</h2>
-            <Form inputs={inputs} buttonText="Se connecter" />
+        <section className="section">
+            <h2 className="section__title">Connexion</h2>
+            <Form inputs={inputs} handleForm={handleForm} buttonText="Se connecter" user={user} setUser={setUser} />
             <StyledLink to="/signup" >Pas encore de compte ? Inscrivez-vous</StyledLink>
-        </div>
+        </section>
     );
 };
 
