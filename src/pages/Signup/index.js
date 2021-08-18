@@ -3,27 +3,32 @@ import { faUser, faIdBadge, faAt, faLock } from '@fortawesome/free-solid-svg-ico
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
 import { Link, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import userReducer from '../../reducers/userReducer';
 
 const inputs = [
     {
         name: 'firstName',
         placeholder: 'Prénom',
+        type: 'text',
         icon: faUser
     },
     {
         name: 'lastName',
         placeholder: 'Nom',
+        type: 'text',
         icon: faIdBadge
     },
     {
         name: 'mail',
         placeholder: 'Email',
+        type: 'email',
         icon: faAt
     },
     {
         name: 'password',
         placeholder: 'Mot de passe',
+        type: 'password',
         icon: faLock
     }
 ];
@@ -38,12 +43,7 @@ const StyledLink = styled(Link)`
 
 const Signup = () => {
 
-    const [user, setUser] = useState({
-        firstName: '',
-        lastName: '',
-        mail: '',
-        password: ''
-    });
+    const [userState, dispatchUser] = useReducer(userReducer, { value: { firstName: '', lastName: '', mail: '', password: '' }, isValid: { firstName: null, lastName: null, mail: null, password: null } });
 
     let history = useHistory();
 
@@ -55,7 +55,7 @@ const Signup = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(userState.value)
         })
             .then(response => {
                 if (response.ok) {
@@ -73,7 +73,7 @@ const Signup = () => {
     return (
         <section className="section">
             <h2 className="section__title">Inscription</h2>
-            <Form inputs={inputs} handleForm={handleForm} buttonText="S'inscrire" user={user} setUser={setUser} />
+            <Form inputs={inputs} actionType='SIGNUP_FORM' handleForm={handleForm} buttonText="S'inscrire" userState={userState} dispatchUser={dispatchUser} />
             <StyledLink to="/signin" >Déjà inscrit ? Connectez-vous</StyledLink>
         </section>
     );

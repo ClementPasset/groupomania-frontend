@@ -15,7 +15,11 @@
         align-items: center;
         
         &--error{
-            background-color: #e4b2b2;
+            background-color: $error;
+        }
+        &--success{
+            background-color: $success;
+            color: #1ab12e;
         }
     }
 
@@ -24,6 +28,21 @@
         margin: 1rem 0;
         border-radius: 0 .5rem .5rem 0;
         border-left: none;
+        
+        &--error{
+            border-color: $error;
+            &:-webkit-autofill{
+                box-shadow: 0 0 0 30px $error inset;
+            }
+        }
+
+        &--success{
+            border-color: $success;
+            background-color: $success;
+            &:-webkit-autofill{
+                box-shadow: 0 0 0 30px $success inset;
+            }
+        }
     }
 
     &:focus-within &__label{

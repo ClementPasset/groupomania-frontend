@@ -3,17 +3,20 @@ import Form from '../../components/Form';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import userReducer from '../../reducers/userReducer';
 
 const inputs = [
     {
         name: 'mail',
         placeholder: 'Email',
+        type: 'email',
         icon: faAt
     },
     {
         name: 'password',
         placeholder: 'Mot de passe',
+        type: 'text',
         icon: faLock
     }
 ];
@@ -26,12 +29,10 @@ const StyledLink = styled(Link)`
     text-decoration:none;
 `;
 
-const Signup = () => {
+const Signin = () => {
 
-    const [user, setUser] = useState({
-        mail: '',
-        password: ''
-    });
+    const [userState, dispatchUser] = useReducer(userReducer, { value: { firstName: '', lastName: '', mail: '', password: '' }, isValid: { firstName: null, lastName: null, mail: null, password: null } });
+
 
     const handleForm = (e) => {
         e.preventDefault();
@@ -41,7 +42,7 @@ const Signup = () => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(userState)
         }).then(response => response.json())
             .then(data => console.log(data))
             .catch(error => console.log(error))
@@ -50,10 +51,10 @@ const Signup = () => {
     return (
         <section className="section">
             <h2 className="section__title">Connexion</h2>
-            <Form inputs={inputs} handleForm={handleForm} buttonText="Se connecter" user={user} setUser={setUser} />
+            <Form inputs={inputs} actionType='SIGNIN_FORM' handleForm={handleForm} buttonText="Se connecter" userState={userState} dispatchUser={dispatchUser} />
             <StyledLink to="/signup" >Pas encore de compte ? Inscrivez-vous</StyledLink>
         </section>
     );
 };
 
-export default Signup;
+export default Signin;

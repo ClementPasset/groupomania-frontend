@@ -1,12 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleRight, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
-const Form = ({ inputs, buttonText, user, setUser, handleForm }) => {
+const Form = ({ inputs, buttonText, userState, dispatchUser, handleForm, actionType }) => {
 
     const handleChange = (e) => {
-        let newUser = { ...user };
+        let newUser = { ...userState.value };
         newUser[e.target.name] = e.target.value;
-        setUser(newUser);
+        dispatchUser({ type: actionType, value: { value: { ...newUser }, isValid: userState.isValid }, field: e.target.name })
     };
 
     return (
@@ -14,8 +14,8 @@ const Form = ({ inputs, buttonText, user, setUser, handleForm }) => {
             {inputs.map((input, index) => {
                 return (
                     <div key={`form-${index}`} className="formGroup">
-                        <label className={`formGroup__label ${input.error ? ' formGroup__label--error' : ''}`} htmlFor={input.name}><FontAwesomeIcon icon={input.error ? faExclamationTriangle : (input.icon ?? faArrowCircleRight)} /></label>
-                        <input onChange={handleChange} value={user[input.name]} autoFocus={index === 0} name={input.name} id={input.name} type={input.name === "password" ? "password" : "text"} placeholder={input.placeholder} className={`formGroup__input input${input.error ? ' input--error' : ''}`} />
+                        <label className={`formGroup__label ${userState.isValid[input.name] === true ? ' formGroup__label--success' : ''} ${userState.isValid[input.name] === false ? ' formGroup__label--error' : ''}`} htmlFor={input.name}><FontAwesomeIcon icon={userState.isValid[input.name] === false ? faExclamationTriangle : (input.icon ?? faArrowCircleRight)} /></label>
+                        <input onChange={handleChange} value={userState.value[input.name]} autoFocus={index === 0} name={input.name} id={input.name} type={input.type} placeholder={input.placeholder} className={`formGroup__input input ${userState.isValid[input.name] === true ? ' formGroup__input--success' : ''} ${userState.isValid[input.name] === false ? ' input--error' : ''}`} />
                     </div>
                 );
             })}
