@@ -1,6 +1,7 @@
 .formGroup{
     display: flex;
     justify-content: center;
+    position: relative;
 
     &__label{
         width: 3rem;
@@ -43,6 +44,12 @@
                 box-shadow: 0 0 0 30px $success inset;
             }
         }
+    }
+
+    &__errorText{
+        width: 80%;
+        text-align: center;
+        margin: auto;
     }
 
     &:focus-within &__label{

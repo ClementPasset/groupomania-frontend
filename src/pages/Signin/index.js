@@ -1,10 +1,12 @@
 import { faAt, faLock } from '@fortawesome/free-solid-svg-icons';
 import Form from '../../components/Form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
-import { useReducer } from 'react';
+import { useContext, useReducer } from 'react';
 import userReducer from '../../reducers/userReducer';
+import { AuthContext } from '../../utils/context';
+import useHttp from '../../hooks/useHttp';
 
 const inputs = [
     {
@@ -16,7 +18,7 @@ const inputs = [
     {
         name: 'password',
         placeholder: 'Mot de passe',
-        type: 'text',
+        type: 'password',
         icon: faLock
     }
 ];
@@ -31,29 +33,47 @@ const StyledLink = styled(Link)`
 
 const Signin = () => {
 
-    const [userState, dispatchUser] = useReducer(userReducer, { value: { firstName: '', lastName: '', mail: '', password: '' }, isValid: { firstName: null, lastName: null, mail: null, password: null } });
+    const [userState, dispatchUser] = useReducer(userReducer,
+        {
+            value: { firstName: '', lastName: '', mail: '', password: '' },
+            isValid: { firstName: null, lastName: null, mail: null, password: null }
+        }
+    );
 
+    let history = useHistory();
+    let url = "/";
 
-    const handleForm = (e) => {
-        e.preventDefault();
-        fetch('http://localhost:3001/api/user/signin', {
+    const handleRequest = data => {
+        history.push(url);
+        dispatchIsLogged({ type: 'LOGIN', value: { logged: true, userId: data.userId, token: data.token } });
+    };
+
+    const { error, sendRequest } = useHttp({
+        url: `${process.env.REACT_APP_API_URL}/user/signin/`,
+        params: {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userState)
-        }).then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error))
+            body: JSON.stringify(userState.value)
+        }
+    }, handleRequest);
+
+    let { dispatchIsLogged } = useContext(AuthContext);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        sendRequest();
     }
 
     return (
         <section className="section">
             <h2 className="section__title">Connexion</h2>
-            <Form inputs={inputs} actionType='SIGNIN_FORM' handleForm={handleForm} buttonText="Se connecter" userState={userState} dispatchUser={dispatchUser} />
+            <Form inputs={inputs} actionType='SIGNIN_FORM' handleSubmit={handleSubmit} buttonText="Se connecter" userState={userState} dispatchUser={dispatchUser} />
+            {error && <p style={{ margin: '1rem', textAlign: 'center' }}>{error}</p>}
             <StyledLink to="/signup" >Pas encore de compte ? Inscrivez-vous</StyledLink>
-        </section>
+        </section >
     );
 };
 

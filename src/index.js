@@ -2,48 +2,36 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ErrorRoute from './pages/ErrorRoute';
-import Home from './pages/Home';
+import Landing from './pages/Landing';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import './styles/style.css';
 import Header from './components/Header';
-
-const links = [
-  {
-    path: '/',
-    label: 'Accueil'
-  },
-  {
-    path: '/signin',
-    label: 'Se connecter'
-  },
-  {
-    path: '/signup',
-    label: 'S\'inscrire'
-  }
-];
+import { AuthProvider } from './utils/context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Header links={links} />
-      <main>
-        <Switch>
-          <Route exact path="/signup">
-            <Signup />
-          </Route>
-          <Route exact path="/signin">
-            <Signin />
-          </Route>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route>
-            <ErrorRoute />
-          </Route>
-        </Switch>
-      </main>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <main>
+          <Switch>
+            <Route exact path="/signup">
+              <Signup />
+            </Route>
+            <Route exact path="/signin">
+              <Signin />
+            </Route>
+            <Route exact path="/">
+              <Landing />
+            </Route>
+            <Route>
+              <ErrorRoute />
+            </Route>
+          </Switch>
+        </main>
+      </Router>
+    </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
