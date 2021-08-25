@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import './styles/style.css';
 import Header from './components/Header';
 import { AuthProvider } from './utils/context';
+import Admin from './pages/Admin';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,6 +22,9 @@ ReactDOM.render(
             </Route>
             <Route exact path="/signin">
               <Signin />
+            </Route>
+            <Route exact path="/admin">
+              <Admin />
             </Route>
             <Route exact path="/">
               <Landing />

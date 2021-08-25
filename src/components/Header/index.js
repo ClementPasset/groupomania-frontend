@@ -11,7 +11,7 @@ const Header = () => {
         dispatchIsLogged({ type: 'LOGOUT' });
     }
 
-    const links = isLogged.logged ?
+    let links = isLogged.logged ?
         [
             {
                 path: '/',
@@ -20,6 +20,10 @@ const Header = () => {
             {
                 path: '/profile',
                 label: 'Mon profil'
+            },
+            {
+                path: '/admin',
+                label: 'Admin'
             },
             {
                 path: '/',
@@ -42,6 +46,9 @@ const Header = () => {
             }
         ];
 
+    if (!isLogged.isAdmin) {
+        links = links.filter(elt => elt.label !== 'Admin');
+    }
 
     return (
         <header className="header">

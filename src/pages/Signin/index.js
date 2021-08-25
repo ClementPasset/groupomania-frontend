@@ -45,7 +45,7 @@ const Signin = () => {
 
     const handleRequest = data => {
         history.push(url);
-        dispatchIsLogged({ type: 'LOGIN', value: { logged: true, userId: data.userId, token: data.token } });
+        dispatchIsLogged({ type: 'LOGIN', value: { logged: true, userId: data.userId, isAdmin: data.isAdmin, token: data.token, tokenExpDate: data.expirationDate } });
     };
 
     const { error, sendRequest } = useHttp({
