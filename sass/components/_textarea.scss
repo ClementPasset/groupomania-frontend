@@ -1,13 +1,14 @@
-.input{
+.textarea{
     display: block;
     max-width: 300px;
     width: 90%;
-    height: 3rem;
     margin: 1rem;
     padding: 1rem;
     outline: none;
     border: 3px solid transparent;
     border-radius: .5rem;
+    resize: none;
+    height: 15rem;
 
     &:focus{
         border: 3px solid $red;
@@ -18,13 +19,13 @@
     }
 }
 @media #{$medium-up}{
-    .input{
+    .textarea{
         max-width: unset;
         width: 80%;
     }
 }
 @media #{$large-up}{
-    .input{
+    .textarea{
         width: 60%;
     }
 }

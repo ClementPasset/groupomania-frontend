@@ -9,6 +9,8 @@ import './styles/style.css';
 import Header from './components/Header';
 import { AuthProvider } from './utils/context';
 import Admin from './pages/Admin';
+import Profile from './pages/Profile';
+import Post from './pages/Post';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,8 +28,14 @@ ReactDOM.render(
             <Route exact path="/admin">
               <Admin />
             </Route>
+            <Route exact path="/profile">
+              <Profile />
+            </Route>
             <Route exact path="/">
               <Landing />
+            </Route>
+            <Route path="/post/:postId">
+              <Post />
             </Route>
             <Route>
               <ErrorRoute />

@@ -13,7 +13,7 @@ const Admin = () => {
 
     return (
         <section className="section">
-
+            <h2 className='section__title'>Administration</h2>
         </section>
     );
 };
