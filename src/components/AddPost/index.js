@@ -3,22 +3,12 @@ import useHttp from "../../hooks/useHttp";
 import { AuthContext } from "../../utils/context";
 import Input from "../../utils/helpers/Input";
 
-const AddPost = ({ fields, getPosts }) => {
+const AddPost = ({ fields, getPosts, handleGetRequest }) => {
 
     const [addingPost, setAddingPost] = useState(false);
-    const [body, setBody] = useState(null);
-    const [headers, setHeaders] = useState(null);
     const { isLogged } = useContext(AuthContext);
     const [formError, setFormError] = useState(null);
-    const handleRequest = data => console.log(data);
-    const { sendRequest: createPost } = useHttp({
-        url: `${process.env.REACT_APP_API_URL}/post`,
-        params: {
-            method: 'POST',
-            body: body,
-            headers: headers
-        }
-    }, data => handleRequest);
+    const { sendRequest: createPost } = useHttp();
 
     const handleClick = () => {
         setAddingPost(!addingPost);
@@ -35,7 +25,7 @@ const AddPost = ({ fields, getPosts }) => {
         return error === null;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (validateForm()) {
@@ -48,13 +38,30 @@ const AddPost = ({ fields, getPosts }) => {
             }
             formData.append('userId', isLogged.userId);
 
-            setBody(formData);
-            setHeaders({
-                'Authorization': isLogged.token
+            createPost({
+                url: `${process.env.REACT_APP_API_URL}/post`,
+                params: {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': isLogged.token
+                    }
+                }
+            }, () => {
+                getPosts({
+                    url: `${process.env.REACT_APP_API_URL}/post`,
+                    params: {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': isLogged.token
+                        }
+                    }
+                }, handleGetRequest);
+                setAddingPost(false);
             });
 
-            createPost();
-            getPosts();
         }
 
     };

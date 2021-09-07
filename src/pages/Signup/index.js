@@ -62,17 +62,7 @@ const Signup = () => {
         dispatchIsLogged({ type: 'LOGIN', value: { logged: true, userId: data.userId, isAdmin: data.isAdmin, token: data.token, tokenExpDate: data.expirationDate } });
     }
 
-    const { error, sendRequest } = useHttp({
-        url: `${process.env.REACT_APP_API_URL}/user/signup`,
-        params: {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userState.value)
-        }
-    }, handleRequest);
+    const { error, sendRequest } = useHttp();
 
     let history = useHistory();
     let url = "/";
@@ -85,7 +75,17 @@ const Signup = () => {
         });
 
         if (isValid) {
-            sendRequest();
+            sendRequest({
+                url: `${process.env.REACT_APP_API_URL}/user/signup`,
+                params: {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userState.value)
+                }
+            }, handleRequest);
         }
     }
 
