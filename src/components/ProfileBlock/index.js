@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { useHistory } from 'react-router-dom';
+import { AuthContext } from '../../utils/context/index';
+import useHttp from '../../hooks/useHttp';
 
 const ProfileBlock = ({ userInfo }) => {
 
     const [profileChanged, setProfileChanged] = useState(false);
+    const { isLogged, dispatchIsLogged } = useContext(AuthContext);
+    const history = useHistory();
+    const { sendRequest } = useHttp();
 
     const handleClick = () => {
         let input = document.querySelector('#profilePictureInput');
@@ -18,7 +24,21 @@ const ProfileBlock = ({ userInfo }) => {
         }
     };
     const handleDelete = () => {
-
+        sendRequest({
+            url: `${process.env.REACT_APP_API_URL}/user/${userInfo.id}`,
+            params: {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': isLogged.token
+                },
+                body: JSON.stringify({ userId: isLogged.userId, action: 'deleteUser' })
+            }
+        }, () => {
+            dispatchIsLogged({ type: 'LOGOUT' });
+            history.push('/');
+        });
     };
     const handleUpdate = () => {
 

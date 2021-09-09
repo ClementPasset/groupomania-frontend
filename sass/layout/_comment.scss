@@ -1,6 +1,7 @@
 .comment{
     display: flex;
     flex-direction: column;
+    position: relative;
 
     &__author{
         display: flex;

@@ -21,15 +21,19 @@
 
     &__text{
         margin: 1rem;
-        font-size: 1.3rem;
+        font-size: 1rem;
         color: $lightblue;
         text-align: justify;
-        line-height: 2rem;
+        line-height: 1.2rem;
     }
 }
 @media #{$medium-up}{
     .section{
         max-width: 850px;
+        &__text{
+            font-size: 1.2rem;
+            line-height: 2rem;
+        }
     }
 }
 @media #{$large-up}{

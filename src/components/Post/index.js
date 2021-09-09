@@ -33,7 +33,7 @@ const Post = ({ post, index }) => {
             <p className="muted">Par {post.UserId ? `${post.User.firstName} ${post.User.lastName}` : 'un ancien utilisateur'} le {new DateFormat(post.createdAt).toString()}</p>
             {post.imgURL && <img className="post__img" src={`${process.env.REACT_APP_IMAGE_FOLDER}/${post.imgURL}`} alt='' />}
             <p className="section__text">{TextFormat.excerpt(post.content)}</p>
-            {(isLogged.userId === post.UserId || isLogged.isAdmin) ? <span onClick={(e) => { handleDelete(e, post.id) }} className="post__delete"><FontAwesomeIcon icon={faTrash} /></span> : ''}
+            {(isLogged.userId === post.UserId || isLogged.isAdmin) ? <span onClick={(e) => { handleDelete(e, post.id) }} className="delete"><FontAwesomeIcon icon={faTrash} /></span> : ''}
             <ul className="post__info">
                 {isLogged.userId === post.UserId ? <li><Link to={`/edit/${post.id}`}><FontAwesomeIcon icon={faEdit} /> Modifier</Link></li> : ''}
                 <li><Link to={`/post/${post.id}`}>Voir le post</Link></li>

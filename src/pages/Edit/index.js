@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import useHttp from '../../hooks/useHttp';
 import { AuthContext } from "../../utils/context";
 import { faHeading, faNewspaper, faImages } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,7 @@ import Input from "../../utils/helpers/Input";
 
 const Edit = () => {
 
+    const history = useHistory();
     const handleImgChange = (e) => {
         let textInput = document.querySelector(`#imageUrl-textInput`);
         let img = document.querySelector('#postImg');
@@ -67,7 +68,6 @@ const Edit = () => {
         if (currentPost) {
             let titleInput = document.querySelector('#title');
             let contentInput = document.querySelector('#content');
-            let imageInput = document.querySelector('#imageUrl-textInput');
 
             titleInput.value = currentPost.title;
             contentInput.value = currentPost.content;
@@ -76,6 +76,25 @@ const Edit = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        let formData = new FormData();
+        formData.append('title', document.querySelector(`#title`).value);
+        formData.append('content', document.querySelector(`#content`).value);
+        if (document.querySelector(`#imageUrl`).files[0]) {
+            formData.append('file', document.querySelector(`#imageUrl`).files[0]);
+        }
+        formData.append('userId', isLogged.userId);
+        formData.append('id', currentPost.id)
+
+        sendRequest({
+            url: `${process.env.REACT_APP_API_URL}/post/${id}`,
+            params: {
+                method: 'PUT',
+                body: formData,
+                headers: {
+                    'Authorization': isLogged.token
+                }
+            }
+        }, () => history.push('/'));
     };
 
     if (currentPost) {
@@ -86,7 +105,7 @@ const Edit = () => {
                     {fields.map((field, index) => {
                         return new Input(field.name, field.placeholder, field.type, field.icon, index, field.onChange).toHtml();
                     })}
-                    {currentPost.imgURL && <img id="postImg" className="post__img" src={`${process.env.REACT_APP_IMAGE_FOLDER}/${currentPost.imgURL}`} />}
+                    <img alt="" id="postImg" className="post__img" src={currentPost.imgURL ? `${process.env.REACT_APP_IMAGE_FOLDER}/${currentPost.imgURL}` : ''} />
                     <button className='btn' >Modifier</button>
                 </form>
             </section>

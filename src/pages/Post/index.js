@@ -28,10 +28,6 @@ const Post = () => {
         }, handleRequest);
     }, []);
 
-    useEffect(() => {
-        console.log('Post : ', post)
-    }, [post]);
-
     return post ? (
         <>
             <section className="section">

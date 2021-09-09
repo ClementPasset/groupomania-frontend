@@ -8,6 +8,10 @@ class TextFormat {
             return text;
         }
     }
+
+    static nl2br(text) {
+        return text.replaceAll('\n', '<br />');
+    }
 };
 
 export default TextFormat;

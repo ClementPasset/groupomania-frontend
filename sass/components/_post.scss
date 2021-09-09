@@ -10,14 +10,19 @@
 
     &__info{
         display: flex;
-        justify-content: space-around;
-        padding: 1rem;
+        flex-direction: column-reverse;
+        text-align: center;
+        & li{
+            margin: .2rem;
+        }
     }
+}
 
-    &__delete{
-        cursor: pointer;
-        position: absolute;
-        right: 2rem;
-        top:2rem;
+@media #{$small-up}{
+    .post{
+        &__info{
+            justify-content: space-around;
+            flex-direction: row;
+        }
     }
 }

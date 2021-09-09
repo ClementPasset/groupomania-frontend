@@ -6,11 +6,11 @@ import { AuthContext } from '../../utils/context';
 const Profile = () => {
 
     const { isLogged } = useContext(AuthContext);
-    const { sendRequest: getUser } = useHttp();
+    const { sendRequest } = useHttp();
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
-        getUser({
+        sendRequest({
             url: `${process.env.REACT_APP_API_URL}/user/${isLogged.userId}`,
             params: {
                 method: 'GET',
@@ -28,6 +28,7 @@ const Profile = () => {
             <ProfileBlock userInfo={userInfo} />
             <section className="section">
                 <h2 className="section__title">Mes posts</h2>
+
             </section>
         </>
     );
