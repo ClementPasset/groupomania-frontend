@@ -3,14 +3,12 @@ import { faComment } from '@fortawesome/free-solid-svg-icons';
 import useHttp from '../../hooks/useHttp';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../utils/context';
-import { useHistory } from 'react-router-dom';
 
-const CommentForm = ({ post }) => {
+const CommentForm = ({ post, setCommentAdded, commentAdded }) => {
 
     const { sendRequest: postComment } = useHttp();
     const { isLogged } = useContext(AuthContext);
     const [comment, setComment] = useState("");
-    const history = useHistory();
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -30,8 +28,9 @@ const CommentForm = ({ post }) => {
                         userId: isLogged.userId
                     })
                 }
-            })
-            history.go(0);
+            }, data => console.log(data));
+            setCommentAdded(!commentAdded);
+            setComment('');
         }
     };
 

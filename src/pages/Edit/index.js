@@ -83,7 +83,7 @@ const Edit = () => {
             formData.append('file', document.querySelector(`#imageUrl`).files[0]);
         }
         formData.append('userId', isLogged.userId);
-        formData.append('id', currentPost.id)
+        formData.append('id', currentPost.id);
 
         sendRequest({
             url: `${process.env.REACT_APP_API_URL}/post/${id}`,

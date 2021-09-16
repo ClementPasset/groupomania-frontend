@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowCircleRight, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
-const Form = ({ inputs, buttonText, userState, dispatchUser, handleSubmit, actionType }) => {
+const LoginForm = ({ inputs, buttonText, userState, dispatchUser, handleSubmit, actionType }) => {
 
     const handleChange = (e) => {
         let newUser = { ...userState.value };
@@ -28,4 +28,4 @@ const Form = ({ inputs, buttonText, userState, dispatchUser, handleSubmit, actio
     );
 };
 
-export default Form;
+export default LoginForm;

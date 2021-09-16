@@ -11,8 +11,13 @@ const Post = () => {
     const { isLogged } = useContext(AuthContext);
     const { postId } = useParams();
     const [post, setPost] = useState(null);
-    const handleRequest = data => setPost(data);
+    const [comments, setComments] = useState([]);
     const { sendRequest: getPost } = useHttp();
+    const handleRequest = data => {
+        setPost(data);
+        setComments(data.Comments)
+    };
+    const [commentAdded, setCommentAdded] = useState(false);
 
     useEffect(() => {
         getPost({
@@ -26,7 +31,7 @@ const Post = () => {
                 }
             }
         }, handleRequest);
-    }, []);
+    }, [commentAdded]);
 
     return post ? (
         <>
@@ -36,8 +41,8 @@ const Post = () => {
                 {post.imgURL && <img alt='' src={`${process.env.REACT_APP_IMAGE_FOLDER}/${post.imgURL}`} />}
                 <p className="section__text">{post.content}</p>
             </section>
-            {post.Comments.length > 0 && <CommentBlock comments={post.Comments} />}
-            <CommentForm post={post} />
+            {comments.length > 0 && <CommentBlock setComments={setComments} comments={comments} />}
+            <CommentForm post={post} commentAdded={commentAdded} setCommentAdded={setCommentAdded} />
         </>
     ) :
         (

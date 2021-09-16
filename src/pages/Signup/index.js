@@ -1,4 +1,4 @@
-import Form from '../../components/Form';
+import LoginForm from '../../components/LoginForm';
 import { faUser, faIdBadge, faAt, faLock } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
@@ -92,7 +92,7 @@ const Signup = () => {
     return (
         <section className="section">
             <h2 className="section__title">Inscription</h2>
-            <Form inputs={inputs} actionType='SIGNUP_FORM' handleSubmit={handleSubmit} buttonText="S'inscrire" userState={userState} dispatchUser={dispatchUser} />
+            <LoginForm inputs={inputs} actionType='SIGNUP_FORM' handleSubmit={handleSubmit} buttonText="S'inscrire" userState={userState} dispatchUser={dispatchUser} />
             {error && <p style={{ margin: '1rem', textAlign: 'center' }}>{error === 'SequelizeUniqueConstraintError' ? "Un compte avec cette adresse email existe déjà." : 'Une erreur a été rencontrée'}</p>}
             <StyledLink to="/signin" >Déjà inscrit ? Connectez-vous</StyledLink>
         </section>

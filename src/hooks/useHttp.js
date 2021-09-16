@@ -14,8 +14,6 @@ const useHttp = () => {
             callback(data);
         }
         catch (err) {
-            console.log("ERREUR useHttp !!");
-            console.log(err)
             setError(err.message || 'Une erreur a été rencontrée.');
         }
     }

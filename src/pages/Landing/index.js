@@ -65,7 +65,7 @@ const Landing = () => {
                     <>
                         <AddPost handleGetRequest={handleGetRequest} getPosts={getPosts} fields={fields} />
                         {posts.map((post, index) => (
-                            <Post key={`posts-${index}`} index={index} post={post} />
+                            <Post key={`posts-${index}`} index={index} post={post} posts={posts} setPosts={setPosts} />
                         ))}
                     </> :
                     <section className="section">Une erreur est survenue, merci de réessayer plus tard.</section>

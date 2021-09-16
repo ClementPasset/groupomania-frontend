@@ -1,0 +1,21 @@
+.infoPopup{
+    position: fixed;
+    z-index: 9999;
+    top:50%;
+    left: 50%;
+    margin: 0!important;
+    transform: translate(-50%,-50%);
+    max-width: 500px;
+    width: 80%;
+    border-radius: .5rem;
+    background-color: $orange;
+    color:$blue;
+    padding:.5rem;
+    animation: popup .2s linear;
+    border: 2px solid $red;
+    box-shadow: 2px 2px 10px $red;
+    
+    &__question{
+        margin:1rem;
+    }
+}

@@ -1,5 +1,5 @@
 import { faAt, faLock } from '@fortawesome/free-solid-svg-icons';
-import Form from '../../components/Form';
+import LoginForm from '../../components/LoginForm';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../utils/colors';
@@ -70,7 +70,7 @@ const Signin = () => {
     return (
         <section className="section">
             <h2 className="section__title">Connexion</h2>
-            <Form inputs={inputs} actionType='SIGNIN_FORM' handleSubmit={handleSubmit} buttonText="Se connecter" userState={userState} dispatchUser={dispatchUser} />
+            <LoginForm inputs={inputs} actionType='SIGNIN_FORM' handleSubmit={handleSubmit} buttonText="Se connecter" userState={userState} dispatchUser={dispatchUser} />
             {error && <p style={{ margin: '1rem', textAlign: 'center' }}>{error}</p>}
             <StyledLink to="/signup" >Pas encore de compte ? Inscrivez-vous</StyledLink>
         </section >
